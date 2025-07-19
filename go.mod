@@ -1,5 +1,3 @@
-replace github.com/omec-project/openapi => github.com/networkgcorefullcode/openapi v1.5.0
-
 module github.com/omec-project/nrf
 
 go 1.24.0
@@ -70,3 +68,5 @@ require (
 	gopkg.in/h2non/gock.v1 v1.1.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/omec-project/openapi => github.com/networkgcorefullcode/openapi v1.5.1
