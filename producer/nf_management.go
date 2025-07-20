@@ -495,7 +495,7 @@ func NFRegisterProcedure(nfProfile models.NfProfile) (header http.Header, respon
 	if !factory.NrfConfig.Configuration.NfProfileExpiryEnable {
 		NFDeleteAll(string(nf.NfType))
 	} else {
-		timein := time.Now().Local().Add(time.Second * time.Duration(nf.HeartBeatTimer*3))
+		timein := time.Now().Local().Add(time.Second * time.Duration(*nf.HeartBeatTimer*3))
 		putData["expireAt"] = timein
 		nfs, _ := dbadapter.DBClient.RestfulAPIGetOne(collName, filter)
 		if len(nfs) == 0 {

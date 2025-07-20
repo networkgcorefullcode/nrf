@@ -20,6 +20,7 @@ import (
 )
 
 var NrfConfig Config
+var SbiUri string
 
 // InitConfigFactory gets the NrfConfig and sets the REST API endpoint used to
 // fetch the configuration from.
@@ -29,6 +30,7 @@ func InitConfigFactory(f string) error {
 		return err
 	}
 	NrfConfig = Config{}
+	SbiUri = NrfConfig.GetSbiScheme() + "://" + NrfConfig.GetSbiRegisterAddr()
 
 	if err = yaml.Unmarshal(content, &NrfConfig); err != nil {
 		return err

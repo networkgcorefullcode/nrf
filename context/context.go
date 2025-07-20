@@ -40,7 +40,7 @@ func InitNFService(srvNameList []string, version string) []models.NfService {
 		NFServices[index] = models.NfService{
 			ServiceInstanceId: strconv.Itoa(index),
 			ServiceName:       name,
-			Versions: &[]models.NfServiceVersion{
+			Versions: []models.NfServiceVersion{
 				{
 					ApiFullVersion:  version,
 					ApiVersionInUri: versionUri,
@@ -48,8 +48,8 @@ func InitNFService(srvNameList []string, version string) []models.NfService {
 			},
 			Scheme:          models.UriScheme(factory.NrfConfig.GetSbiScheme()),
 			NfServiceStatus: models.NfServiceStatus_REGISTERED,
-			ApiPrefix:       factory.NrfConfig.GetSbiUri(),
-			IpEndPoints: &[]models.IpEndPoint{
+			ApiPrefix:       &factory.SbiUri,
+			IpEndPoints: []models.IpEndPoint{
 				{
 					Ipv4Address: factory.NrfConfig.GetSbiRegisterIP(),
 					Transport:   models.TransportProtocol_TCP,
