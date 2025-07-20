@@ -87,7 +87,7 @@ func HTTPRegisterNFInstance(c *gin.Context) {
 	}
 
 	// step 2: convert requestBody to openapi models
-	err = openapi.Deserialize(&nfprofile, requestBody, "application/json")
+	err = nfprofile.UnmarshalJSON(requestBody)
 	if err != nil {
 		problemDetail := "[Request Body] " + err.Error()
 		rsp := models.ProblemDetails{
@@ -99,6 +99,8 @@ func HTTPRegisterNFInstance(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, rsp)
 		return
 	}
+
+	logger.ManagementLog.Debugf("NF Profile ID: %+v was successfully unmarshaled", nfprofile.NfInstanceId)
 
 	// step 3: encapsulate the request by httpwrapper package
 	req := httpwrapper.NewRequest(c.Request, nfprofile)
