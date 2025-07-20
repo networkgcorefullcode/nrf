@@ -30,7 +30,6 @@ func InitConfigFactory(f string) error {
 		return err
 	}
 	NrfConfig = Config{}
-	SbiUri = NrfConfig.GetSbiScheme() + "://" + NrfConfig.GetSbiRegisterAddr()
 
 	if err = yaml.Unmarshal(content, &NrfConfig); err != nil {
 		return err
@@ -40,6 +39,7 @@ func InitConfigFactory(f string) error {
 		logger.CfgLog.Infof("webuiUri not set in configuration file. Using %v", NrfConfig.Configuration.WebuiUri)
 		return nil
 	}
+	SbiUri = NrfConfig.GetSbiUri()
 	err = validateWebuiUri(NrfConfig.Configuration.WebuiUri)
 	return err
 }
