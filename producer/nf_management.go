@@ -577,7 +577,7 @@ func SendNFStatusNotify(Notification_event models.NotificationEventType, nfInsta
 	configuration := Nnrf_NFManagement.NewConfiguration()
 	// url = fmt.Sprintf("%s%s", url, "/notification")
 
-	configuration.SetBasePathNoGroup(url)
+	configuration.Servers.URL(0, map[string]string{"apiRoot": url})
 	notifcationData := models.NotificationData{
 		Event:         Notification_event,
 		NfInstanceUri: nfInstanceUri,
