@@ -99,15 +99,15 @@ func nnrfNFManagementCondition(nf *models.NfProfile, nfprofile models.NfProfile)
 		logger.ManagementLog.Infoln("NfProfileExpiryEnable: true but keepAliveTime: 0, setting default keepAliveTimer: 60 sec")
 		factory.NrfConfig.Configuration.NfKeepAliveTime = 60
 	}
-	nf.HeartBeatTimer = factory.NrfConfig.Configuration.NfKeepAliveTime
+	*nf.HeartBeatTimer = factory.NrfConfig.Configuration.NfKeepAliveTime
 	logger.ManagementLog.Infof("HeartBeat Timer value: %v sec", nf.HeartBeatTimer)
 
 	// fqdn
-	if nfprofile.Fqdn != "" {
+	if *nfprofile.Fqdn != "" {
 		nf.Fqdn = nfprofile.Fqdn
 	}
 	// interPlmnFqdn
-	if nfprofile.InterPlmnFqdn != "" {
+	if *nfprofile.InterPlmnFqdn != "" {
 		nf.InterPlmnFqdn = nfprofile.InterPlmnFqdn
 	}
 	// ipv4Addresses
@@ -120,7 +120,7 @@ func nnrfNFManagementCondition(nf *models.NfProfile, nfprofile models.NfProfile)
 	// ipv6Addresses
 	if nfprofile.Ipv6Addresses != nil {
 		// fmt.Println("NsiList")
-		a := make([]string, len(nfprofile.Ipv6Addresses))
+		a := make([]models.Ipv6Addr, len(nfprofile.Ipv6Addresses))
 		copy(a, nfprofile.Ipv6Addresses)
 		nf.Ipv6Addresses = a
 	}
@@ -130,7 +130,7 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 	// sNssais
 	if nfprofile.SNssais != nil {
 		// fmt.Println("SNssais")
-		a := make([]models.Snssai, len(*nfprofile.SNssais))
+		a := make([]models.ExtSnssai, len(*nfprofile.SNssais))
 		copy(a, *nfprofile.SNssais)
 		nf.SNssais = &a
 	}
@@ -143,10 +143,10 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 		nf.NsiList = a
 	}
 	// allowedPlmns
-	if nfprofile.AllowedPlmns != nil {
-		a := make([]models.PlmnId, len(*nfprofile.AllowedPlmns))
-		copy(a, *nfprofile.AllowedPlmns)
-		nf.AllowedPlmns = &a
+	if nfprofile.GetAllowedPlmns() != nil {
+		a := make([]models.PlmnId, len(nfprofile.GetAllowedPlmns()))
+		copy(a, nfprofile.GetAllowedPlmns())
+		nf.AllowedPlmns = a
 	}
 	// allowedNfTypes
 	if nfprofile.AllowedNfTypes != nil {
@@ -162,26 +162,26 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 	}
 
 	// allowedNssais
-	if nfprofile.AllowedNssais != nil {
+	if nfprofile.GetAllowedNssais() != nil {
 		// fmt.Println("SNssais")
-		a := make([]models.Snssai, len(*nfprofile.AllowedNssais))
+		a := make([]models.ExtSnssai, len(*nfprofile.AllowedNssais))
 		copy(a, *nfprofile.AllowedNssais)
 		nf.AllowedNssais = &a
 	}
 	// Priority
-	if nfprofile.Priority > 0 && nfprofile.Priority <= 65535 {
+	if nfprofile.GetPriority() > 0 && nfprofile.GetPriority() <= 65535 {
 		nf.Priority = nfprofile.Priority
 	}
 	// Capacity
-	if nfprofile.Capacity > 0 && nfprofile.Capacity <= 65535 {
+	if nfprofile.GetCapacity() > 0 && nfprofile.GetCapacity() <= 65535 {
 		nf.Capacity = nfprofile.Capacity
 	}
 	// Load
-	if nfprofile.Load > 0 && nfprofile.Load <= 100 {
+	if nfprofile.GetLoad() > 0 && nfprofile.GetCapacity() <= 100 {
 		nf.Load = nfprofile.Load
 	}
 	// Locality
-	if nfprofile.Locality != "" {
+	if nfprofile.GetLocality() != "" {
 		nf.Locality = nfprofile.Locality
 	}
 	// udrInfo
@@ -304,7 +304,7 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 		if nfprofile.SmfInfo.TaiRangeList != nil {
 			a.TaiRangeList = nfprofile.SmfInfo.TaiRangeList
 		}
-		if nfprofile.SmfInfo.PgwFqdn != "" {
+		if *nfprofile.GetSmfInfo().PgwFqdn != "" {
 			a.PgwFqdn = nfprofile.SmfInfo.PgwFqdn
 		}
 		if nfprofile.SmfInfo.AccessType != nil {
@@ -402,10 +402,10 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 	}
 
 	// nfServicePersistence
-	if nfprofile.NfServicePersistence {
-		nf.NfServicePersistence = true
+	if nfprofile.GetNfServicePersistence() {
+		*nf.NfServicePersistence = true
 	} else {
-		nf.NfServicePersistence = false
+		*nf.NfServicePersistence = false
 	}
 
 	// nfServices
