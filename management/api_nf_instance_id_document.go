@@ -100,7 +100,7 @@ func HTTPRegisterNFInstance(c *gin.Context) {
 		return
 	}
 
-	logger.ManagementLog.Debugf("NF Profile ID: %+v was successfully unmarshaled", nfprofile.NfInstanceId)
+	logger.ManagementLog.Debugf("NF Profile ID: %+v was successfully unmarshaled", c.Params.ByName("nfInstanceID"))
 
 	// step 3: encapsulate the request by httpwrapper package
 	req := httpwrapper.NewRequest(c.Request, nfprofile)
