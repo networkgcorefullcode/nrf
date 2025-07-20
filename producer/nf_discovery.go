@@ -8,7 +8,6 @@ package producer
 import (
 	"encoding/json"
 	"fmt"
-	"math/big"
 	"net/http"
 	"net/url"
 	"sort"
@@ -118,28 +117,22 @@ func NFDiscoveryProcedure(queryParameters url.Values) (response *models.SearchRe
 	if queryParameters["target-nf-type"][0] == "BSF" {
 		for i, nfProfile := range nfProfilesStruct {
 			if nfProfile.BsfInfo.Ipv4AddressRanges != nil {
-				for j := range *nfProfile.BsfInfo.Ipv4AddressRanges {
-					ipv4IntStart, err := strconv.Atoi((((*(*nfProfilesStruct[i].BsfInfo).Ipv4AddressRanges)[j]).Start))
-					if err != nil {
-						logger.DiscoveryLog.Warnln("ipv4IntStart Atoi Error: ", err)
-					}
-					((*(*nfProfilesStruct[i].BsfInfo).Ipv4AddressRanges)[j]).Start = context.Ipv4IntToIpv4String(int64(ipv4IntStart))
-					ipv4IntEnd, err := strconv.Atoi((((*(*nfProfilesStruct[i].BsfInfo).Ipv4AddressRanges)[j]).End))
-					if err != nil {
-						logger.DiscoveryLog.Warnln("ipv4IntEnd Atoi Error: ", err)
-					}
-					((*(*nfProfilesStruct[i].BsfInfo).Ipv4AddressRanges)[j]).End = context.Ipv4IntToIpv4String(int64(ipv4IntEnd))
+				for j := range nfProfile.BsfInfo.Ipv4AddressRanges {
+					ipv4IntStart := nfProfilesStruct[i].BsfInfo.Ipv4AddressRanges[j].Start
+
+					nfProfilesStruct[i].BsfInfo.Ipv4AddressRanges[j].Start = ipv4IntStart
+					ipv4IntEnd := nfProfilesStruct[i].BsfInfo.Ipv4AddressRanges[j].End
+
+					nfProfilesStruct[i].BsfInfo.Ipv4AddressRanges[j].End = ipv4IntEnd
 				}
 			}
 			if nfProfile.BsfInfo.Ipv6PrefixRanges != nil {
-				for j := range *nfProfile.BsfInfo.Ipv6PrefixRanges {
-					ipv6IntStart := new(big.Int)
-					ipv6IntStart.SetString(((*(*nfProfilesStruct[i].BsfInfo).Ipv6PrefixRanges)[j]).Start, 10)
-					((*(*nfProfilesStruct[i].BsfInfo).Ipv6PrefixRanges)[j]).Start = context.Ipv6IntToIpv6String(ipv6IntStart)
+				for j := range nfProfile.BsfInfo.Ipv6PrefixRanges {
+					ipv6IntStart := nfProfilesStruct[i].BsfInfo.Ipv6PrefixRanges[j].Start
+					nfProfilesStruct[i].BsfInfo.Ipv6PrefixRanges[j].Start = ipv6IntStart
 
-					ipv6IntEnd := new(big.Int)
-					ipv6IntEnd.SetString(((*(*nfProfilesStruct[i].BsfInfo).Ipv6PrefixRanges)[j]).End, 10)
-					((*(*nfProfilesStruct[i].BsfInfo).Ipv6PrefixRanges)[j]).End = context.Ipv6IntToIpv6String(ipv6IntEnd)
+					ipv6IntEnd := nfProfilesStruct[i].BsfInfo.Ipv6PrefixRanges[j].End
+					nfProfilesStruct[i].BsfInfo.Ipv6PrefixRanges[j].End = ipv6IntEnd
 				}
 			}
 		}

@@ -16,6 +16,9 @@ import (
 )
 
 var NrfNfProfile models.NfProfile
+var Ipv4Address_aux string
+var Transport_aux models.TransportProtocol
+var Port_aux int32
 
 func InitNrfContext() {
 	config := factory.NrfConfig
@@ -35,6 +38,9 @@ func InitNFService(srvNameList []string, version string) []models.NfService {
 	tmpVersion := strings.Split(version, ".")
 	versionUri := "v" + tmpVersion[0]
 	NFServices := make([]models.NfService, len(srvNameList))
+	Ipv4Address_aux = factory.NrfConfig.GetSbiRegisterIP()
+	Transport_aux = models.TransportProtocol_TCP
+	Port_aux = int32(factory.NrfConfig.GetSbiPort())
 	for index, nameString := range srvNameList {
 		name := models.ServiceName(nameString)
 		NFServices[index] = models.NfService{
@@ -51,9 +57,9 @@ func InitNFService(srvNameList []string, version string) []models.NfService {
 			ApiPrefix:       &factory.SbiUri,
 			IpEndPoints: []models.IpEndPoint{
 				{
-					Ipv4Address: factory.NrfConfig.GetSbiRegisterIP(),
-					Transport:   models.TransportProtocol_TCP,
-					Port:        int32(factory.NrfConfig.GetSbiPort()),
+					Ipv4Address: &Ipv4Address_aux,
+					Transport:   &Transport_aux,
+					Port:        &Port_aux,
 				},
 			},
 		}

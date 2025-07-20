@@ -188,7 +188,7 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 	if nfprofile.UdrInfo != nil {
 		var a models.UdrInfo
 
-		if nfprofile.UdrInfo.GroupId != "" {
+		if *nfprofile.UdrInfo.GroupId != "" {
 			a.GroupId = nfprofile.UdrInfo.GroupId
 		}
 
@@ -214,7 +214,7 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 	if nfprofile.UdmInfo != nil {
 		var a models.UdmInfo
 
-		if nfprofile.UdmInfo.GroupId != "" {
+		if *nfprofile.UdmInfo.GroupId != "" {
 			a.GroupId = nfprofile.UdmInfo.GroupId
 		}
 
@@ -240,7 +240,7 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 	if nfprofile.AusfInfo != nil {
 		var a models.AusfInfo
 
-		if nfprofile.AusfInfo.GroupId != "" {
+		if *nfprofile.AusfInfo.GroupId != "" {
 			a.GroupId = nfprofile.AusfInfo.GroupId
 		}
 
@@ -286,7 +286,7 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 			a.BackupInfoAmfRemoval = nfprofile.AmfInfo.BackupInfoAmfRemoval
 		}
 
-		if nfprofile.AmfInfo.N2InterfaceAmfInfo != nil {
+		if nfprofile.AmfInfo.N2InterfaceAmfInfo.Get() != nil {
 			a.N2InterfaceAmfInfo = nfprofile.AmfInfo.N2InterfaceAmfInfo
 		}
 		nf.AmfInfo = &a
@@ -340,10 +340,10 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 		if nfprofile.PcfInfo.SupiRanges != nil {
 			a.SupiRanges = nfprofile.PcfInfo.SupiRanges
 		}
-		if nfprofile.PcfInfo.RxDiamHost != "" {
+		if *nfprofile.PcfInfo.RxDiamHost != "" {
 			a.RxDiamHost = nfprofile.PcfInfo.RxDiamHost
 		}
-		if nfprofile.PcfInfo.RxDiamRealm != "" {
+		if *nfprofile.PcfInfo.RxDiamRealm != "" {
 			a.RxDiamRealm = nfprofile.PcfInfo.RxDiamRealm
 		}
 		nf.PcfInfo = &a
@@ -359,20 +359,36 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 			a.IpDomainList = nfprofile.BsfInfo.IpDomainList
 		}
 		if nfprofile.BsfInfo.Ipv4AddressRanges != nil {
-			b := make([]models.Ipv4AddressRange, len(*nfprofile.BsfInfo.Ipv4AddressRanges))
-			for i := 0; i < len(*nfprofile.BsfInfo.Ipv4AddressRanges); i++ {
-				b[i].Start = strconv.Itoa(int(Ipv4ToInt((*nfprofile.BsfInfo.Ipv4AddressRanges)[i].Start)))
-				b[i].End = strconv.Itoa(int(Ipv4ToInt((*nfprofile.BsfInfo.Ipv4AddressRanges)[i].End)))
+			b := make([]models.Ipv4AddressRange, len(nfprofile.BsfInfo.Ipv4AddressRanges))
+			for i := 0; i < len(nfprofile.BsfInfo.Ipv4AddressRanges); i++ {
+				if (nfprofile.BsfInfo.Ipv4AddressRanges)[i].Start != nil {
+					b[i].Start = nfprofile.BsfInfo.Ipv4AddressRanges[i].Start
+				} else {
+					b[i].Start = nil
+				}
+				if (nfprofile.BsfInfo.Ipv4AddressRanges)[i].End != nil {
+					b[i].End = nfprofile.BsfInfo.Ipv4AddressRanges[i].End
+				} else {
+					b[i].End = nil
+				}
 			}
-			a.Ipv4AddressRanges = &b
+			a.Ipv4AddressRanges = b
 		}
 		if nfprofile.BsfInfo.Ipv6PrefixRanges != nil {
-			b := make([]models.Ipv6PrefixRange, len(*nfprofile.BsfInfo.Ipv6PrefixRanges))
-			for i := 0; i < len(*nfprofile.BsfInfo.Ipv6PrefixRanges); i++ {
-				b[i].Start = Ipv6ToInt(((*nfprofile.BsfInfo.Ipv6PrefixRanges)[i].Start)).String()
-				b[i].End = Ipv6ToInt(((*nfprofile.BsfInfo.Ipv6PrefixRanges)[i].End)).String()
+			b := make([]models.Ipv6PrefixRange, len(nfprofile.BsfInfo.Ipv6PrefixRanges))
+			for i := 0; i < len(nfprofile.BsfInfo.Ipv6PrefixRanges); i++ {
+				if (nfprofile.BsfInfo.Ipv6PrefixRanges)[i].Start != nil {
+					b[i].Start = nfprofile.BsfInfo.Ipv6PrefixRanges[i].Start
+				} else {
+					b[i].Start = nil
+				}
+				if (nfprofile.BsfInfo.Ipv6PrefixRanges)[i].End != nil {
+					b[i].End = nfprofile.BsfInfo.Ipv6PrefixRanges[i].End
+				} else {
+					b[i].End = nil
+				}
 			}
-			a.Ipv6PrefixRanges = &b
+			a.Ipv6PrefixRanges = b
 		}
 		nf.BsfInfo = &a
 	}
@@ -557,7 +573,7 @@ func GetNotificationUri(nfProfile models.NfProfile) []string {
 		var guamiListFilter bson.M
 		if (*nfProfile.AmfInfo).GuamiList != nil {
 			var guamiListBsonArray bson.A
-			for _, guami := range *(*nfProfile.AmfInfo).GuamiList {
+			for _, guami := range (nfProfile.AmfInfo).GuamiList {
 				tmp, err := json.Marshal(guami)
 				if err != nil {
 					logger.ManagementLog.Error(err)

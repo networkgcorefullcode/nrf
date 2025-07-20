@@ -34,8 +34,8 @@ func GetNrfInfo() *models.NrfInfo {
 	return &nrfinfo
 }
 
-func getUdrInfo() map[string]models.UdrInfo {
-	servedUdrInfo := make(map[string]models.UdrInfo)
+func getUdrInfo() *map[string]models.NrfInfoServedUdrInfoValue {
+	servedUdrInfo := make(map[string]models.NrfInfoServedUdrInfoValue)
 	var UDRProfile models.NfProfile
 
 	collName := "NfProfile"
@@ -53,13 +53,15 @@ func getUdrInfo() map[string]models.UdrInfo {
 			panic(err)
 		}
 		index := strconv.Itoa(i)
-		servedUdrInfo[index] = *UDRProfile.UdrInfo
+		servedUdrInfo[index] = models.NrfInfoServedUdrInfoValue{
+			UdrInfo: UDRProfile.UdrInfo,
+		}
 	}
-	return servedUdrInfo
+	return &servedUdrInfo
 }
 
-func getUdmInfo() map[string]models.UdmInfo {
-	servedUdmInfo := make(map[string]models.UdmInfo)
+func getUdmInfo() *map[string]models.NrfInfoServedUdmInfoValue {
+	servedUdmInfo := make(map[string]models.NrfInfoServedUdmInfoValue)
 	var UDMProfile models.NfProfile
 
 	collName := "NfProfile"
@@ -77,13 +79,15 @@ func getUdmInfo() map[string]models.UdmInfo {
 			panic(err)
 		}
 		index := strconv.Itoa(i)
-		servedUdmInfo[index] = *UDMProfile.UdmInfo
+		servedUdmInfo[index] = models.NrfInfoServedUdmInfoValue{
+			UdmInfo: UDMProfile.UdmInfo,
+		}
 	}
-	return servedUdmInfo
+	return &servedUdmInfo
 }
 
-func getAusfInfo() map[string]models.AusfInfo {
-	servedAusfInfo := make(map[string]models.AusfInfo)
+func getAusfInfo() *map[string]models.NrfInfoServedAusfInfoValue {
+	servedAusfInfo := make(map[string]models.NrfInfoServedAusfInfoValue)
 	var AUSFProfile models.NfProfile
 
 	collName := "NfProfile"
@@ -94,19 +98,22 @@ func getAusfInfo() map[string]models.AusfInfo {
 	if err != nil {
 		logger.ManagementLog.Error(err)
 	}
+
 	for i := 0; i < len(AUSFStruct); i++ {
 		err := mapstructure.Decode(AUSFStruct[i], &AUSFProfile)
 		if err != nil {
 			panic(err)
 		}
 		index := strconv.Itoa(i)
-		servedAusfInfo[index] = *AUSFProfile.AusfInfo
+		servedAusfInfo[index] = models.NrfInfoServedAusfInfoValue{
+			AusfInfo: AUSFProfile.AusfInfo,
+		}
 	}
-	return servedAusfInfo
+	return &servedAusfInfo
 }
 
-func getAmfInfo() map[string]models.AmfInfo {
-	servedAmfinfo := make(map[string]models.AmfInfo)
+func getAmfInfo() *map[string]models.NrfInfoServedAmfInfoValue {
+	servedAmfInfo := make(map[string]models.NrfInfoServedAmfInfoValue)
 	var AMFProfile models.NfProfile
 
 	collName := "NfProfile"
@@ -117,19 +124,22 @@ func getAmfInfo() map[string]models.AmfInfo {
 	if err != nil {
 		logger.ManagementLog.Error(err)
 	}
+
 	for i := 0; i < len(AMFStruct); i++ {
 		err := mapstructure.Decode(AMFStruct[i], &AMFProfile)
 		if err != nil {
 			panic(err)
 		}
 		index := strconv.Itoa(i)
-		servedAmfinfo[index] = *AMFProfile.AmfInfo
+		servedAmfInfo[index] = models.NrfInfoServedAmfInfoValue{
+			AmfInfo: AMFProfile.AmfInfo,
+		}
 	}
-	return servedAmfinfo
+	return &servedAmfInfo
 }
 
-func getSmfInfo() map[string]models.SmfInfo {
-	servedSmfInfo := make(map[string]models.SmfInfo)
+func getSmfInfo() *map[string]models.NrfInfoServedSmfInfoValue {
+	servedSmfInfo := make(map[string]models.NrfInfoServedSmfInfoValue)
 	var SMFProfile models.NfProfile
 
 	collName := "NfProfile"
@@ -140,19 +150,22 @@ func getSmfInfo() map[string]models.SmfInfo {
 	if err != nil {
 		logger.ManagementLog.Error(err)
 	}
+
 	for i := 0; i < len(SMFStruct); i++ {
 		err := mapstructure.Decode(SMFStruct[i], &SMFProfile)
 		if err != nil {
 			panic(err)
 		}
 		index := strconv.Itoa(i)
-		servedSmfInfo[index] = *SMFProfile.SmfInfo
+		servedSmfInfo[index] = models.NrfInfoServedSmfInfoValue{
+			SmfInfo: SMFProfile.SmfInfo,
+		}
 	}
-	return servedSmfInfo
+	return &servedSmfInfo
 }
 
-func getUpfInfo() map[string]models.UpfInfo {
-	servedUpfInfo := make(map[string]models.UpfInfo)
+func getUpfInfo() *map[string]models.NrfInfoServedUpfInfoValue {
+	servedUpfInfo := make(map[string]models.NrfInfoServedUpfInfoValue)
 	var UPFProfile models.NfProfile
 
 	collName := "NfProfile"
@@ -163,19 +176,22 @@ func getUpfInfo() map[string]models.UpfInfo {
 	if err != nil {
 		logger.ManagementLog.Error(err)
 	}
+
 	for i := 0; i < len(UPFStruct); i++ {
 		err := mapstructure.Decode(UPFStruct[i], &UPFProfile)
 		if err != nil {
 			panic(err)
 		}
 		index := strconv.Itoa(i)
-		servedUpfInfo[index] = *UPFProfile.UpfInfo
+		servedUpfInfo[index] = models.NrfInfoServedUpfInfoValue{
+			UpfInfo: UPFProfile.UpfInfo,
+		}
 	}
-	return servedUpfInfo
+	return &servedUpfInfo
 }
 
-func getPcfInfo() map[string]models.PcfInfo {
-	servedPcfInfo := make(map[string]models.PcfInfo)
+func getPcfInfo() *map[string]models.NrfInfoServedPcfInfoValue {
+	servedPcfInfo := make(map[string]models.NrfInfoServedPcfInfoValue)
 	var PCFProfile models.NfProfile
 
 	collName := "NfProfile"
@@ -186,19 +202,22 @@ func getPcfInfo() map[string]models.PcfInfo {
 	if err != nil {
 		logger.ManagementLog.Error(err)
 	}
+
 	for i := 0; i < len(PCFStruct); i++ {
 		err := mapstructure.Decode(PCFStruct[i], &PCFProfile)
 		if err != nil {
 			panic(err)
 		}
 		index := strconv.Itoa(i)
-		servedPcfInfo[index] = *PCFProfile.PcfInfo
+		servedPcfInfo[index] = models.NrfInfoServedPcfInfoValue{
+			PcfInfo: PCFProfile.PcfInfo,
+		}
 	}
-	return servedPcfInfo
+	return &servedPcfInfo
 }
 
-func getBsfInfo() map[string]models.BsfInfo {
-	servedBsfInfo := make(map[string]models.BsfInfo)
+func getBsfInfo() *map[string]models.NrfInfoServedBsfInfoValue {
+	servedBsfInfo := make(map[string]models.NrfInfoServedBsfInfoValue)
 	var BSFProfile models.NfProfile
 
 	collName := "NfProfile"
@@ -209,19 +228,22 @@ func getBsfInfo() map[string]models.BsfInfo {
 	if err != nil {
 		logger.ManagementLog.Error(err)
 	}
+
 	for i := 0; i < len(BSFStruct); i++ {
 		err := mapstructure.Decode(BSFStruct[i], &BSFProfile)
 		if err != nil {
 			panic(err)
 		}
 		index := strconv.Itoa(i)
-		servedBsfInfo[index] = *BSFProfile.BsfInfo
+		servedBsfInfo[index] = models.NrfInfoServedBsfInfoValue{
+			BsfInfo: BSFProfile.BsfInfo,
+		}
 	}
-	return servedBsfInfo
+	return &servedBsfInfo
 }
 
-func getChfInfo() map[string]models.ChfInfo {
-	servedChfInfo := make(map[string]models.ChfInfo)
+func getChfInfo() *map[string]models.NrfInfoServedChfInfoValue {
+	servedChfInfo := make(map[string]models.NrfInfoServedChfInfoValue)
 	var CHFProfile models.NfProfile
 
 	collName := "NfProfile"
@@ -232,15 +254,18 @@ func getChfInfo() map[string]models.ChfInfo {
 	if err != nil {
 		logger.ManagementLog.Error(err)
 	}
+
 	for i := 0; i < len(CHFStruct); i++ {
 		err := mapstructure.Decode(CHFStruct[i], &CHFProfile)
 		if err != nil {
 			panic(err)
 		}
 		index := strconv.Itoa(i)
-		servedChfInfo[index] = *CHFProfile.ChfInfo
+		servedChfInfo[index] = models.NrfInfoServedChfInfoValue{
+			ChfInfo: CHFProfile.ChfInfo,
+		}
 	}
-	return servedChfInfo
+	return &servedChfInfo
 }
 
 // DecodeNfProfile - Only support []map[string]interface to []models.NfProfile
