@@ -5,8 +5,8 @@
 
 IMAGE_NAME="nrf-dev"
 CONTAINER_NAME="nrf-dev-container"
-HOST_PORT="29510"
-CONTAINER_PORT="29510"
+HOST_PORT="8004"
+CONTAINER_PORT="8000"
 
 case "$1" in
     "build")
@@ -21,12 +21,14 @@ case "$1" in
         docker stop $CONTAINER_NAME 2>/dev/null || true
         docker rm $CONTAINER_NAME 2>/dev/null || true
         
-        # Run new container with volume mounts
+        # Run new container with volume mounts and persistent Go packages
+        docker volume create nrf-go-pkg-cache 2>/dev/null || true
         docker run -it --name $CONTAINER_NAME \
             -p $HOST_PORT:$CONTAINER_PORT \
             -v "$(pwd):/app" \
             -v "$HOME/.gitconfig:/root/.gitconfig:ro" \
             -v "$HOME/.ssh:/root/.ssh:ro" \
+            -v nrf-go-pkg-cache:/go/pkg/mod \
             --workdir /app \
             $IMAGE_NAME
         ;;
