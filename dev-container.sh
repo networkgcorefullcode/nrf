@@ -22,8 +22,10 @@ case "$1" in
         docker rm $CONTAINER_NAME 2>/dev/null || true
         
         # Run new container with volume mounts and persistent Go packages
+        docker network create --subnet=172.28.0.0/16 net5g
         docker volume create nrf-go-pkg-cache 2>/dev/null || true
         docker run -it --name $CONTAINER_NAME \
+            --network net5g --ip 172.28.0.4 \
             -p $HOST_PORT:$CONTAINER_PORT \
             -v "$(pwd):/app" \
             -v nrf-go-pkg-cache:/go/pkg/mod \
