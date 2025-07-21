@@ -26,6 +26,8 @@ case "$1" in
         docker run --name $CONTAINER_NAME \
             -p $HOST_PORT:$CONTAINER_PORT \
             -v "$(pwd):/app" \
+            -v "$HOME/.gitconfig:/root/.gitconfig:ro" \
+            -v "$HOME/.ssh:/root/.ssh:ro" \
             -v nrf-go-pkg-cache:/go/pkg/mod \
             --workdir /app \
             $IMAGE_NAME
