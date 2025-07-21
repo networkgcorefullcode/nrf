@@ -1,0 +1,56 @@
+# .dockerignore for development environment
+
+# Git directory (we'll clone fresh or use mounted volume)
+.git
+
+# Build artifacts
+bin/
+*.exe
+*.so
+*.dylib
+*.dll
+
+# Go build cache
+.cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+
+# Node modules (if any)
+node_modules/
+
+# Coverage reports
+coverage.txt
+*.coverage
+
+# Documentation build
+docs/_build/
+docs/site/
+
+# Development scripts (will be copied if needed)
+# dev-container.*
+
+# Previous docker builds
+Dockerfile
+Dockerfile.*
