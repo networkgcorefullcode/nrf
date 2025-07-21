@@ -23,11 +23,9 @@ case "$1" in
         
         # Run new container with volume mounts and persistent Go packages
         docker volume create nrf-go-pkg-cache 2>/dev/null || true
-        docker run -it --name $CONTAINER_NAME \
+        docker run --name $CONTAINER_NAME \
             -p $HOST_PORT:$CONTAINER_PORT \
             -v "$(pwd):/app" \
-            -v "$HOME/.gitconfig:/root/.gitconfig:ro" \
-            -v "$HOME/.ssh:/root/.ssh:ro" \
             -v nrf-go-pkg-cache:/go/pkg/mod \
             --workdir /app \
             $IMAGE_NAME

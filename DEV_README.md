@@ -61,7 +61,7 @@ Este directorio contiene los archivos necesarios para crear un entorno de desarr
 
 Esto iniciará un contenedor interactivo con:
 - El código fuente montado en `/app`
-- Puerto 29510 expuesto
+- Puerto 8004 expuesto
 - Configuración de Git (si está disponible en el host)
 
 ### 3. Desarrollo iterativo dentro del contenedor
@@ -128,7 +128,7 @@ run-app
 
 ## Configuración de puertos
 
-Por defecto, el puerto 29510 está expuesto para la aplicación NRF. Puedes modificar esto en los scripts de gestión si necesitas diferentes puertos.
+Por defecto, el puerto 8004 está expuesto para la aplicación NRF. Puedes modificar esto en los scripts de gestión si necesitas diferentes puertos.
 
 ## Volúmenes montados
 
