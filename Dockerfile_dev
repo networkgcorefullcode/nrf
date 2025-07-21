@@ -56,6 +56,7 @@ WORKDIR /app
 RUN git config --global init.defaultBranch main && \
     git config --global user.name "Developer" && \
     git config --global user.email "developer@example.com"
+    git config --global --add safe.directory /app
 
 # Create directories for development
 RUN mkdir -p /app/bin /app/logs /app/config
