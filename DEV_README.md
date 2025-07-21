@@ -11,6 +11,7 @@ Este directorio contiene los archivos necesarios para crear un entorno de desarr
 ## Características del entorno de desarrollo
 
 ### Herramientas incluidas
+
 - **Git** - Control de versiones
 - **Go 1.24.5** - Compilador Go
 - **Herramientas de desarrollo Go**:
@@ -23,6 +24,7 @@ Este directorio contiene los archivos necesarios para crear un entorno de desarr
 - **Utilidades**: tree, jq, make
 
 ### Scripts incluidos en el contenedor
+
 - `update-code` - Actualiza el código desde git
 - `build-app` - Compila la aplicación NRF
 - `run-app` - Ejecuta la aplicación NRF
