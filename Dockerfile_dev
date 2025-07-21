@@ -52,12 +52,6 @@ RUN go install github.com/air-verse/air@latest && \
 # Set working directory
 WORKDIR /app
 
-# Configure Git (will be overridden by user's git config if mounted)
-RUN git config --global init.defaultBranch main && \
-    git config --global user.name "Developer" && \
-    git config --global user.email "developer@example.com" && \
-    git config --global --add safe.directory /app
-
 # Create directories for development
 RUN mkdir -p /app/bin /app/logs /app/config
 
@@ -74,7 +68,6 @@ EXPOSE 8000 8080 29510 29510/udp
 RUN echo '#!/bin/bash\n\
 echo "=== NRF Development Environment ==="\n\
 echo "Available commands:"\n\
-echo "  update-code  - Pull latest code from git"\n\
 echo "  build-app    - Build the NRF application"\n\
 echo "  run-app      - Run the NRF application"\n\
 echo "  test-app     - Run tests"\n\
@@ -83,20 +76,10 @@ echo "  clean-app    - Clean build artifacts"\n\
 echo ""\n\
 echo "Current directory: $(pwd)"\n\
 echo "Go version: $(go version)"\n\
-echo "Git status:"\n\
-git status --porcelain 2>/dev/null || echo "Not a git repository or no git configured"\n\
 echo "======================================="\n\
 ' > /usr/local/bin/dev-info && chmod +x /usr/local/bin/dev-info
 
 # Create helper scripts for common development tasks
-RUN echo '#!/bin/bash\n\
-set -e\n\
-echo "Updating code from git..."\n\
-git fetch --all\n\
-git pull origin $(git branch --show-current)\n\
-echo "Code updated successfully!"\n\
-' > /usr/local/bin/update-code && chmod +x /usr/local/bin/update-code
-
 RUN echo '#!/bin/bash\n\
 set -e\n\
 echo "Building NRF application..."\n\
@@ -147,7 +130,6 @@ echo "Clean completed!"\n\
 # Set up bash aliases for convenience
 RUN echo 'alias ll="ls -la"\n\
 alias la="ls -la"\n\
-alias update="update-code"\n\
 alias build="build-app"\n\
 alias run="run-app"\n\
 alias test="test-app"\n\

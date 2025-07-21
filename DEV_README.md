@@ -12,7 +12,6 @@ Este directorio contiene los archivos necesarios para crear un entorno de desarr
 
 ### Herramientas incluidas
 
-- **Git** - Control de versiones
 - **Go 1.24.5** - Compilador Go
 - **Herramientas de desarrollo Go**:
   - Air (hot reload)
@@ -25,7 +24,6 @@ Este directorio contiene los archivos necesarios para crear un entorno de desarr
 
 ### Scripts incluidos en el contenedor
 
-- `update-code` - Actualiza el código desde git
 - `build-app` - Compila la aplicación NRF
 - `run-app` - Ejecuta la aplicación NRF
 - `test-app` - Ejecuta los tests
@@ -62,16 +60,12 @@ Este directorio contiene los archivos necesarios para crear un entorno de desarr
 Esto iniciará un contenedor interactivo con:
 - El código fuente montado en `/app`
 - Puerto 8004 expuesto
-- Configuración de Git (si está disponible en el host)
 
 ### 3. Desarrollo iterativo dentro del contenedor
 
 Una vez dentro del contenedor:
 
 ```bash
-# Actualizar código desde repositorio
-update-code
-
 # Compilar la aplicación
 build-app
 
@@ -83,21 +77,6 @@ test-app
 
 # Ejecutar linter
 lint-app
-```
-
-### 4. Flujo después de hacer push de nuevo código
-
-Cuando hagas push de nuevo código desde tu máquina host:
-
-```bash
-# Dentro del contenedor, actualiza el código
-update-code
-
-# Recompila
-build-app
-
-# Ejecuta la nueva versión
-run-app
 ```
 
 ## Comandos adicionales del script de gestión
@@ -133,8 +112,29 @@ Por defecto, el puerto 8004 está expuesto para la aplicación NRF. Puedes modif
 ## Volúmenes montados
 
 - Código fuente: `./` → `/app`
-- Configuración Git del host: `~/.gitconfig` → `/root/.gitconfig` (solo lectura)
-- Claves SSH del host: `~/.ssh` → `/root/.ssh` (solo lectura)
+- nrf-go-pkg-cache → /go/pkg/mod
+
+
+## Troubleshooting
+
+1. **Puerto ocupado**: Cambia el HOST_PORT en el script de gestión
+2. **Problemas de compilación**: Ejecuta `clean-app` antes de `build-app`
+
+## Personalización
+
+Puedes personalizar el entorno modificando:
+- `Dockerfile_dev` para añadir más herramientas
+- Scripts en `/usr/local/bin/` dentro del contenedor
+- Variables de entorno en el Dockerfile
+## Configuración de puertos
+
+Por defecto, el puerto 8004 está expuesto para la aplicación NRF. Puedes modificar esto en los scripts de gestión si necesitas diferentes puertos.
+
+## Volúmenes montados
+
+- Código fuente: `./` → `/app`
+- nrf-go-pkg-cache → /go/pkg/mod
+
 
 ## Troubleshooting
 
