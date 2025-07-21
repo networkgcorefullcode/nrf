@@ -421,15 +421,15 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 
 	// nfServicePersistence
 	if nfprofile.GetNfServicePersistence() {
-		*nf.NfServicePersistence = true
+		nf.SetNfServicePersistence(true)
 	} else {
-		*nf.NfServicePersistence = false
+		nf.SetNfServicePersistence(false)
 	}
 
 	// nfServices
 	if nfprofile.NfServices != nil {
 		a := make([]models.NfService, len(*nfprofile.NfServices))
-		copy(a, *nfprofile.NfServices)
+		copy(a, nfprofile.GetNfServices())
 		nf.NfServices = &a
 	}
 	//
