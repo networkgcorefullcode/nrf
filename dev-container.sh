@@ -5,7 +5,7 @@
 
 IMAGE_NAME="nrf-dev"
 CONTAINER_NAME="nrf-dev-container"
-HOST_PORT="8004"
+HOST_PORT="8003"
 CONTAINER_PORT="8000"
 
 case "$1" in
