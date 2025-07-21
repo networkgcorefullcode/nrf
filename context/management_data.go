@@ -99,31 +99,33 @@ func nnrfNFManagementCondition(nf *models.NfProfile, nfprofile models.NfProfile)
 		logger.ManagementLog.Infoln("NfProfileExpiryEnable: true but keepAliveTime: 0, setting default keepAliveTimer: 60 sec")
 		factory.NrfConfig.Configuration.NfKeepAliveTime = 60
 	}
-	*nf.HeartBeatTimer = factory.NrfConfig.Configuration.NfKeepAliveTime
+	nf.SetHeartBeatTimer(factory.NrfConfig.Configuration.NfKeepAliveTime)
 	logger.ManagementLog.Infof("HeartBeat Timer value: %v sec", nf.HeartBeatTimer)
 
 	// fqdn
-	if *nfprofile.Fqdn != "" {
-		nf.Fqdn = nfprofile.Fqdn
+	if nfprofile.HasFqdn() {
+		nf.SetFqdn(*nfprofile.Fqdn)
 	}
 	// interPlmnFqdn
-	if *nfprofile.InterPlmnFqdn != "" {
-		nf.InterPlmnFqdn = nfprofile.InterPlmnFqdn
+	if nfprofile.HasInterPlmnFqdn() {
+		nf.SetInterPlmnFqdn(*nfprofile.InterPlmnFqdn)
 	}
 	// ipv4Addresses
-	if nfprofile.Ipv4Addresses != nil {
+	if nfprofile.HasIpv4Addresses() {
 		// fmt.Println("NsiList")
 		a := make([]string, len(nfprofile.Ipv4Addresses))
 		copy(a, nfprofile.Ipv4Addresses)
 		nf.Ipv4Addresses = a
 	}
 	// ipv6Addresses
-	if nfprofile.Ipv6Addresses != nil {
+	if nfprofile.HasIpv6Addresses() {
 		// fmt.Println("NsiList")
 		a := make([]models.Ipv6Addr, len(nfprofile.Ipv6Addresses))
 		copy(a, nfprofile.Ipv6Addresses)
 		nf.Ipv6Addresses = a
 	}
+
+	logger.ManagementLog.Debugln("finish the function nnrfNFManagementCondition")
 }
 
 func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
