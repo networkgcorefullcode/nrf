@@ -454,6 +454,7 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 		}
 		nf.NfServices = &nfServices
 	}
+	logger.ManagementLog.Debugln("finish the function nnrfNFManagementOption")
 }
 
 func GetNfInstanceURI(nfInstID string) string {
