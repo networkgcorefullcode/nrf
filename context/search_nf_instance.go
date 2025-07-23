@@ -19,7 +19,7 @@ type SearchNFInstances struct {
 	TargetNfInstanceID      string               `form:"target-nf-instance-id" `
 	TargetNfFqdn            string               `form:"target-nf-type" `
 	HnrfURI                 models.UriScheme     `form:"hnrf-uri" `
-	Snssais                 []models.Snssai      `form:"snssais" `
+	Snssais                 []models.ExtSnssai   `form:"snssais" `
 	PlmnSpecificSnssaiList  []models.PlmnSnssai  `form:"plmn-specific-snssai-list"`
 	Dnn                     string               `form:"dnn" `
 	NsiList                 []string             `form:"nsi-list" `

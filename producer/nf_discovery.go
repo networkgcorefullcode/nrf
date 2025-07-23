@@ -321,7 +321,7 @@ func buildFilter(queryParameters url.Values) bson.M {
 				tempSnssai += ","
 				tempSnssai += v
 
-				snssaiStruct := &models.Snssai{}
+				snssaiStruct := &models.ExtSnssai{}
 				err := json.Unmarshal([]byte(tempSnssai), snssaiStruct)
 				if err != nil {
 					logger.DiscoveryLog.Warnln("Unmarshal Error in snssaiStruct", err)
@@ -1436,7 +1436,7 @@ func complexQueryFilterSubprocess(queryParameters map[string]*AtomElem, complexQ
 				tempSnssai += ","
 				tempSnssai += v
 
-				snssaiStruct := &models.Snssai{}
+				snssaiStruct := &models.ExtSnssai{}
 				err := json.Unmarshal([]byte(tempSnssai), snssaiStruct)
 				if err != nil {
 					logger.DiscoveryLog.Warnln("Unmarshal Error in snssaiStruct: ", err)

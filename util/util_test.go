@@ -31,7 +31,7 @@ func TestDecode(t *testing.T) {
 				Mnc: "111",
 			},
 		},
-		"SNssais": &[]models.Snssai{ // range 0-255
+		"SNssais": &[]models.ExtSnssai{ // range 0-255
 			{
 				Sst: 222,
 				Sd:  "SNssais",
@@ -60,7 +60,7 @@ func TestDecode(t *testing.T) {
 		"AllowedNfDomains": []string{
 			"nfdomain1",
 		},
-		"AllowedNssais": &[]models.Snssai{
+		"AllowedNssais": &[]models.ExtSnssai{
 			{
 				Sst: 333,
 				Sd:  "AllowedNssais",

@@ -53,8 +53,8 @@ type Configuration struct {
 }
 
 type PlmnSupportItem struct {
-	PlmnId     models.PlmnId   `yaml:"plmnId"`
-	SNssaiList []models.Snssai `yaml:"snssaiList,omitempty"`
+	PlmnId     models.PlmnId      `yaml:"plmnId"`
+	SNssaiList []models.ExtSnssai `yaml:"snssaiList,omitempty"`
 }
 
 type Sbi struct {
