@@ -296,18 +296,23 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 		var a models.SmfInfo
 
 		if nfprofile.SmfInfo.SNssaiSmfInfoList != nil {
+			logger.ManagementLog.Debugln("Setting SNssaiSmfInfoList in SmfInfo")
 			a.SNssaiSmfInfoList = nfprofile.SmfInfo.SNssaiSmfInfoList
 		}
 		if nfprofile.SmfInfo.TaiList != nil {
+			logger.ManagementLog.Debugln("Setting TaiList in SmfInfo")
 			a.TaiList = nfprofile.SmfInfo.TaiList
 		}
 		if nfprofile.SmfInfo.TaiRangeList != nil {
+			logger.ManagementLog.Debugln("Setting TaiRangeList in SmfInfo")
 			a.TaiRangeList = nfprofile.SmfInfo.TaiRangeList
 		}
 		if nfprofile.SmfInfo.PgwFqdn != "" {
+			logger.ManagementLog.Debugf("Setting PgwFqdn in SmfInfo: %s", nfprofile.SmfInfo.PgwFqdn)
 			a.PgwFqdn = nfprofile.SmfInfo.PgwFqdn
 		}
 		if nfprofile.SmfInfo.AccessType != nil {
+			logger.ManagementLog.Debugln("Setting AccessType in SmfInfo")
 			a.AccessType = nfprofile.SmfInfo.AccessType
 		}
 		nf.SmfInfo = &a

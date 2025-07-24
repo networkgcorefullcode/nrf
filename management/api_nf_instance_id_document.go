@@ -99,6 +99,7 @@ func HTTPRegisterNFInstance(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, rsp)
 		return
 	}
+	logger.ManagementLog.Debugln("Deserialize json data in the struct NfProfile")
 
 	// step 3: encapsulate the request by httpwrapper package
 	req := httpwrapper.NewRequest(c.Request, nfprofile)
