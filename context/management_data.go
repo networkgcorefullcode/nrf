@@ -130,7 +130,7 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 	// sNssais
 	if nfprofile.SNssais != nil {
 		// fmt.Println("SNssais")
-		a := make([]models.ExtSnssai, len(*nfprofile.SNssais))
+		a := make([]models.Snssai, len(*nfprofile.SNssais))
 		copy(a, *nfprofile.SNssais)
 		nf.SNssais = &a
 	}
@@ -164,7 +164,7 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 	// allowedNssais
 	if nfprofile.AllowedNssais != nil {
 		// fmt.Println("SNssais")
-		a := make([]models.ExtSnssai, len(*nfprofile.AllowedNssais))
+		a := make([]models.Snssai, len(*nfprofile.AllowedNssais))
 		copy(a, *nfprofile.AllowedNssais)
 		nf.AllowedNssais = &a
 	}
