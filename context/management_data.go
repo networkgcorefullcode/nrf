@@ -414,7 +414,28 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 		copy(a, *nfprofile.NfServices)
 		nf.NfServices = &a
 	}
-	//
+	// fill the NfServiceList if NfServices is set
+	if nfprofile.NfServices != nil && nfprofile.NfServiceList == nil {
+		logger.ManagementLog.Debugln("NfServiceList is nil, setting NfServiceList from NfServices")
+
+		map_service := make(map[string]models.NfService, len(*nfprofile.NfServices))
+		for _, nfService := range *nfprofile.NfServices {
+			map_service[string(nfService.ServiceInstanceId)] = nfService
+		}
+		nf.NfServiceList = &map_service
+	}
+
+	// fill the NfServices if NfServiceList is set
+	if nfprofile.NfServiceList != nil && nfprofile.NfServices == nil {
+		logger.ManagementLog.Debugln("NfServices is nil, setting NfServices from NfServiceList")
+
+		var nfServices []models.NfService
+		for _, nfService := range *nfprofile.NfServiceList {
+			nfServices = append(nfServices, nfService)
+		}
+		nf.NfServices = &nfServices
+	}
+	logger.ManagementLog.Debugln("finish the function nnrfNFManagementOption")
 }
 
 func GetNfInstanceURI(nfInstID string) string {
