@@ -11,6 +11,7 @@ import (
 	"crypto/rand"
 	"encoding/json"
 	"fmt"
+	"maps"
 	"math/big"
 	"strconv"
 
@@ -419,6 +420,14 @@ func nnrfNFManagementOption(nf *models.NfProfile, nfprofile models.NfProfile) {
 		copy(a, *nfprofile.NfServices)
 		nf.NfServices = &a
 	}
+
+	// nfServiceList
+	if nfprofile.NfServiceList != nil {
+		b := make(map[string]models.NfService, len(*nfprofile.NfServiceList))
+		maps.Copy(b, *nfprofile.NfServiceList)
+		nf.NfServiceList = &b
+	}
+
 	// fill the NfServiceList if NfServices is set
 	if nfprofile.NfServices != nil && nfprofile.NfServiceList == nil {
 		logger.ManagementLog.Debugln("NfServiceList is nil, setting NfServiceList from NfServices")
