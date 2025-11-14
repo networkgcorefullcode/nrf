@@ -50,6 +50,7 @@ type Configuration struct {
 	NfKeepAliveTime       int32    `yaml:"nfKeepAliveTime,omitempty"`
 	MongoDBStreamEnable   bool     `yaml:"mongoDBStreamEnable"`
 	NfProfileExpiryEnable bool     `yaml:"nfProfileExpiryEnable"`
+	MetricsPort           string   `yaml:"metricsPort,omitempty"`
 }
 
 type PlmnSupportItem struct {

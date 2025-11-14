@@ -10,6 +10,7 @@ package metrics
 import (
 	"net/http"
 
+	"github.com/omec-project/nrf/factory"
 	"github.com/omec-project/nrf/logger"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -65,7 +66,7 @@ func init() {
 // InitMetrics initialises NRF metrics
 func InitMetrics() {
 	http.Handle("/metrics", promhttp.Handler())
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServe(factory.NrfConfig.Configuration.MetricsPort, nil); err != nil {
 		logger.InitLog.Errorf("Could not open metrics port: %v", err)
 	}
 }

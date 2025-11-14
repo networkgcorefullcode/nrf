@@ -24,3 +24,4 @@ bin/
 *.pcap
 vendor*
 nrf.exe
+nrf

@@ -12,7 +12,7 @@ configuration:
   sbi:
     scheme: http
     bindingIPv4: "0.0.0.0"
-    registerIPv4: "2.2.2.2"
+    registerIPv4: "172.28.31.5"
     port: 29000
     tls:
       pem: /var/run/certs/tls.crt
@@ -20,3 +20,4 @@ configuration:
   serviceNameList:
     - nnrf-nfm
     - nnrf-disc
+  metricsPort: ":9100"
