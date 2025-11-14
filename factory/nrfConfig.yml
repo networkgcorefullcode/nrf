@@ -1,0 +1,22 @@
+
+info:
+  version: 1.0.0
+  description: NRF initial local configuration
+configuration:
+  mongoDBStreamEnable: true
+  nfProfileExpiryEnable: true
+  nfKeepAliveTime: 60
+  webuiUri: http://webui:5001
+  MongoDBUrl: "mongodb://172.28.31.5:27017/?replicaSet=rs0&connectTimeoutMS=10000"
+  MongoDBName: aether
+  sbi:
+    scheme: http
+    bindingIPv4: "0.0.0.0"
+    registerIPv4: "2.2.2.2"
+    port: 29000
+    tls:
+      pem: /var/run/certs/tls.crt
+      key: /var/run/certs/tls.key
+  serviceNameList:
+    - nnrf-nfm
+    - nnrf-disc
