@@ -7,6 +7,7 @@ package polling
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -31,7 +32,11 @@ var FetchPlmnConfig = func() ([]models.PlmnId, error) {
 	}
 	req.Header.Set("Accept", "application/json")
 
-	client := &http.Client{}
+	client := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		},
+	}
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("HTTP GET %v failed: %w", plmnConfigEndpoint, err)
